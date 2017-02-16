@@ -22,8 +22,8 @@ import java.io.*;
  */
 public class economy_Class {
 	String seat;
-	int countTotalSeat=0;
-	
+	int countTotalSeat = 0;
+
 	boolean[][] custArray = new boolean[4][4];
 	ArrayList<customer> eco_custo = new ArrayList<customer>();
 
@@ -32,7 +32,7 @@ public class economy_Class {
 		seat = " ";
 		for (int i = 0; i < custArray.length; i++) {
 			for (int j = 0; j < custArray.length; j++) {
-				custArray[i][j] = false;//it is empty
+				custArray[i][j] = false;// it is empty
 			}
 		}
 	}
@@ -67,18 +67,17 @@ public class economy_Class {
 	// number [0][1] or [2][1] for the index
 	public void reserved_seat() {
 
-		custArray[0][2] = true;//make it occupied
+		custArray[0][2] = true;// make it occupied
 		custArray[2][3] = true;
 
 	}
 
 	// This method will search in the economy seat
-	public boolean isEmpty(int row, int colum)
-	{
-		if (!(custArray[row][colum]))//not false is true means occupied
-		return true;//it is occupied
+	public boolean isEmpty(int row, int colum) {
+		if (!(custArray[row][colum]))// not false is true means occupied
+			return true;// it is occupied
 		else
-		return false;//it is not occupied
+			return false;// it is not occupied
 	}
 
 	// This method will take the customer name, seat and classOfService
@@ -91,12 +90,63 @@ public class economy_Class {
 	public void fillCustomArray(int row, int coloum) {
 
 	}
-	
-	public void convert_To_Flight_Seat(int row, int cloum){
+
+	public void convert_To_Flight_Seat(int row, int cloum) {
+
+		// This method have to convert the row and cloum to the plance seat
+		// such as 1A, 2B, 20D , ect..
+
+	}
+
+	public void displaySeatINFormat()
+	{	
+	try{
+
+		int x = Integer.valueOf("3");
+		//double c = Double.parseDouble("5");
+		//String b = Integer.toBinaryString(3);//This one can't convert to binary number
+
+		System.out.println(x);}catch(NumberFormatException e){
+		}
+		//System.out.println(c);
+		//System.out.println(b);
+}
+	//This will store the name of the RealSeat to the seat array
+	public int assignSeat(String seatName)
+	{
+		int SeatIndex = 0;//This get to be increase and global later to handle the cancel and add the seat 
 		
-		//This method have to convert the row and cloum to the plance seat 
-		//such as 1A, 2B, 20D , ect..
+		String [] array = new String[5];//This has to be global in this class, for now using the hard code to test it
+		array[SeatIndex] = seatName;
+		
+			return SeatIndex;//This doesn't have to return it, searchSeat can handle to find the seat for customer
+	}
+	
+	/*need searching algorith to find the String seat(1B, 1C in the array), Prototype of the seat search
+	 * This method will use only when customer cancel the seat, customer object will pass the customer's
+	 * seat name such as 1A , 1B and this method will find it int the array and cancel the seat.
+	 * 
+	 */
+	public boolean istherSeat(String seat)
+	{
+		
+		//This array is just hard code, this will be global in this class
+		
+		//This get to be increase and global later to handle the cancel and add the seat 
+		//This is tempory testing for the search array
+		String [] array = new String[10];//This has to be global in this class, for now using the hard code to test it
+		array[5] ="1A";
+		array[0]="2B";//These has to be handle by the another method to populate the golbal array
+		array[2]="12B";
+		
+		for(int i=0; i<array.length; i++){
+			if(array[i] == seat)
+				return true;
+		}
+		
+			return false;
+		}
 		
 	}
 
-}
+
