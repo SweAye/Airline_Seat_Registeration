@@ -32,7 +32,7 @@ public class read {
 		public static void main(String[] args) throws IOException, FileNotFoundException {
 
 			ArrayList<customer> custList = new ArrayList<customer>();
-			Scanner read = new Scanner(new File("Customer_2.txt"));
+			Scanner read = new Scanner(new File("CuEcoList.txt"));
 			String line =" ";
 			String name, seat, level, prefer = "";
 			while (read.hasNextLine()) {

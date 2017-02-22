@@ -1,11 +1,35 @@
 package airline;
+//This method will call Menue Class to take care of every business in Reservation.
+//This class only know to Menu Class, ****None of the classes are know by this class*******************
+
 
 public class airline_testMain {
 	
 	
 	public static void main(String[] args){
-	economy_Class cust_1 = new economy_Class();
 	
+	//Menu is the only object that make it relationship with this airline_testMain class
+	
+	Menu menu= new Menu();
+	menu.displayMenu();
+	
+	
+	
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+	/*	
 	cust_1.displayArray();
 	cust_1.reserved_seat();
 	
@@ -36,5 +60,4 @@ public class airline_testMain {
 		System.out.println("No, there is not ");
 	}	
 	
-
-}
+*/
