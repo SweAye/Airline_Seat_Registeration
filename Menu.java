@@ -20,7 +20,13 @@ public class Menu {
 		try{
 			eco.populate_CustListEcO();
 		//this is just testing if the cust_list is correctly pouplated with  recorded file
-			eco.showCustList();
+			//System.out.println("****This is from window list");
+			//eco.showWcustList();
+			
+			System.out.println("****This is from All customer list");
+			eco.showAllEco();
+			
+			
 		}catch (IOException e){
 			System.out.println("Exception handle in menu constructor");
 			}
@@ -50,6 +56,7 @@ public class Menu {
 				// test
 				// for
 				if (temp == 1) {
+					
 					System.out.println(
 							"Please choose service of class" + "\n" + "1. Economy Class." + "\n" + "2. First Class.");
 					System.out.println("Your Choice:");
@@ -72,8 +79,14 @@ public class Menu {
 						System.out.println("You want to reserve in First Class!:");
 
 				} else
-					System.out.println("You want to cancel the reservation!");
-
+					{System.out.println("You want to cancel the reservation!");
+					//this is cancleing now:
+					eco.BoosofCancleEco( );}
+					
+					
+				
+				
+					
 				// This just repeating the menu
 				System.out.println("Do you want to repeat the Menu? Y or N: ");
 				answer = in.next().charAt(0);
@@ -84,7 +97,7 @@ public class Menu {
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
-		eco.showCustList();
+		eco.showWcustList();
 		System.out.println(
 				"This is from the menu class, test economy class's window list array still holding the data: "
 						+ eco.windowSeat[0] + " " + eco.windowSeat[1]);

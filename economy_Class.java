@@ -1,7 +1,7 @@
 package airline;
 
 import java.util.*;
-
+import java.awt.List;
 import java.io.*;
 
 /**
@@ -30,11 +30,11 @@ public class economy_Class {
 
 	// Four final count for seat, this cannot change//should make those more
 	// object orientend(something like putting in the constructor or so)
-	final int TotalSeat = 5;
-	final int window_Seat = 2;// the seat number is = 40 seat per each w, m, and
+	final int TotalSeat = 12;
+	final int window_Seat = 4;// the seat number is = 40 seat per each w, m, and
 								// A seats
-	final int middle_Seat = 5;
-	final int aiseal_Seat = 5;
+	final int middle_Seat = 4;
+	final int aiseal_Seat = 4;
 
 	// counting window seat, middle seat and aiseal seat
 	int count_W = 0;// These all will back to 0 after testing
@@ -43,15 +43,34 @@ public class economy_Class {
 
 	// Three array to to populate the seat request
 	// This is just testing with arrayList???????Here testing
-	ArrayList<customer> custList = new ArrayList<customer>();
+
+	ArrayList<customer> ALL_EcocustList = new ArrayList<customer>();// this is
+																	// whole
+																	// Economy
+																	// ArrayList,
+																	// mainly
+																	// will
+	// use in calcelation or searching for a customer's name, seat
+
+	ArrayList<customer> WcustList = new ArrayList<customer>();// this Window
+																// customer
+																// arraylist
+
+	ArrayList<customer> McustList = new ArrayList<customer>();// this middle
+																// seat customer
+																// arraylist
+
+	ArrayList<customer> AcustList = new ArrayList<customer>();// this is Aiseal
+																// seat customer
+																// arraylist
 
 	boolean[] windowSeat = new boolean[window_Seat];// These number will depend
 													// on the place's seat
 													// structure
-	String[] middleSeat = new String[middle_Seat];// for this project of plane
+	boolean[] middleSeat = new boolean[middle_Seat];// for this project of plane
 													// seat structure that will
 													// fix.
-	String[] AisaelSeat = new String[aiseal_Seat];// if plane seat setting are
+	boolean[] AisaelSeat = new boolean[aiseal_Seat];// if plane seat setting are
 													// change, just need to
 													// change the final
 													// variables
@@ -64,8 +83,8 @@ public class economy_Class {
 		seat = " ";
 		for (int i = 0; i < windowSeat.length; i++) {
 			windowSeat[i] = false;
-			middleSeat[i] = null;
-			AisaelSeat[i] = null;
+			middleSeat[i] = false;
+			AisaelSeat[i] = false;
 
 		}
 
@@ -84,11 +103,13 @@ public class economy_Class {
 			Scanner in = new Scanner(System.in);
 			// if economy class full?
 			if (isFulllyBooked())// if is false, it is not full, it is true
-									// return, it is full
-				System.out.println("It is full, choose another class!");
-
-			else
+			{ // return, it is full
 				System.out.println("It is avaiable");
+				
+			} else
+				{System.out.println("It is full, choose another class!");
+				return;
+				}
 
 			System.out.println("Please Enter your preference seat: 1 for Window, 2 for middle, 3 for Aiseal:");
 			temp = in.nextInt();
@@ -101,27 +122,37 @@ public class economy_Class {
 					return;
 				}
 
-				else
+				else {
 					System.out.println("You will have your window seat");
-				// the window seat array and assign the first founded window
-				int recordIndex = resvWindowSeat();// this will assign the seat
-													// and return the index
-													// value of the array
-				System.out.println("This is the assigned seat in the window array seat, index: " + recordIndex);
-				// Here call the translator(method) of array index to real
-				// flight seat number.
-				String s = tranSeat.tranlateW(recordIndex);
-				System.out.println("This is real seat: " + s);
-				// Now call for the customer object ArrayList to send, custoemr
-				// name, class and seat
-				String name = getname();
-				System.out.println("This is your name: " + name);
 
-				// method call to set customer arraylist
-				makeCustList(name, s, "Economy", "W");// "W" and Economy will
-														// change according to
-														// the method call.
-				// save the cusomer List to file (call from here)
+					// the window seat array and assign the first founded window
+
+					int recordIndex = resvWindowSeat();// this will assign the
+														// seat
+														// and return the index
+														// value of the array
+					System.out.println("This is the assigned seat in the window array seat, index: " + recordIndex);
+					// Here call the translator(method) of array index to real
+					// flight seat number.
+
+					String s = tranSeat.tranlateW(recordIndex);
+					System.out.println("This is real seat: " + s);
+
+					// Now call for the customer object ArrayList to send,
+					// custoemr
+					// name, class and seat
+					String name = getname();
+					System.out.println("This is your name: " + name);
+
+					// method call to set customer arraylist
+					makeCustListW(name, s, "Economy", "W");// "W" and Economy
+															// will
+															// change according
+															// to
+															// the method call.
+					makeALL_EcocustList(name, s, "Economy", "W");
+					return;
+				}
 
 			}
 
@@ -129,14 +160,57 @@ public class economy_Class {
 			else if (temp == 2) {
 				if (isMiddleSeatFull()) {
 					System.out.println("Middle seats are full");
-				} else
+					return;
+				} else {
 					System.out.println("You will have your middleseat");
+
+					int recordIndex = resvMiddleSeat();
+					System.out.println("This is the assigned seat in the Middle array seat, index: " + recordIndex);
+					// Here call the translator(method) of array index to real
+					// flight seat number.
+
+					String s = tranSeat.tranlateM(recordIndex);
+					System.out.println("This is real seat: " + s);
+
+					String name = getname();// is that a test? missing a purpose
+					System.out.println("This is your name: " + name);
+					// method call to set customer arraylist
+					makeCustListM(name, s, "Economy", "M");// "W" and Economy
+					makeALL_EcocustList(name, s, "Economy", "M");
+
+					System.out.println("This is from the middle Sesat in boos of econmy: ");
+					showAllEco();
+
+					return;
+				}
+
 			}
 
 			else if (isAisealSeatFull()) {
 				System.out.println("Aiseal seats are full");
-			} else
+				return;
+			} else {
 				System.out.println("You will have your Aiseal seat");
+
+				int recordIndex = resvAisealSeat();
+				System.out.println("This is the assigned seat in the Aiseal array seat, index: " + recordIndex);
+				// Here call the translator(method) of array index to real
+				// flight seat number.
+
+				String s = tranSeat.tranlateA(recordIndex);
+				System.out.println("This is real seat: " + s);
+
+				String name = getname();// is that a test? missing a purpose
+				System.out.println("This is your name: " + name);
+				// method call to set customer arraylist
+				makeCustListA(name, s, "Economy", "A");// "W" and Economy will
+														// change according to
+				makeALL_EcocustList(name, s, "Economy", "A"); // the method
+																// call.
+				System.out.println("This is from the Aiseal Seat in boos of econmy: ");
+				showAllEco();
+				return;
+			}
 
 		} catch (Exception e) {
 			System.out.println("Exception occur in seat choice of boss of economy Class.");
@@ -147,32 +221,72 @@ public class economy_Class {
 	// This method will make customer list for whole economy class
 	// customers(Window,middle, Aiseal)
 	// Now it time to make whole customer profile
-	private void makeCustList(String name, String seat, String level, String pref) {
+	private void makeCustListW(String name, String seat, String level, String pref) {
 
 		customer newcust = new customer(name, seat, level, pref);
 
-		custList.add(newcust);
-		System.out.println("This is first customer profile :\n " + custList.get(0).name + "\t " + custList.get(0).seat
-				+ "\t" + custList.get(0).level + "\t" + custList.get(0).Preference);
+		WcustList.add(newcust);
+		System.out.println("This is first customer profile :\n " + WcustList.get(0).name + "\t " + WcustList.get(0).seat
+				+ "\t" + WcustList.get(0).level + "\t" + WcustList.get(0).Preference);
+
+	}
+
+	private void makeCustListM(String name, String seat, String level, String pref) {
+
+		customer newcust = new customer(name, seat, level, pref);
+
+		McustList.add(newcust);
+		System.out.println("This is first customer profile :\n " + McustList.get(0).name + "\t " + McustList.get(0).seat
+				+ "\t" + McustList.get(0).level + "\t" + McustList.get(0).Preference);
+
+	}
+
+	private void makeCustListA(String name, String seat, String level, String pref) {
+
+		customer newcust = new customer(name, seat, level, pref);
+
+		AcustList.add(newcust);
+		System.out.println("This is first customer profile :\n " + AcustList.get(0).name + "\t " + AcustList.get(0).seat
+				+ "\t" + AcustList.get(0).level + "\t" + AcustList.get(0).Preference);
+
+	}
+
+	private void makeALL_EcocustList(String name, String seat, String level, String pref) {
+
+		customer newcust = new customer(name, seat, level, pref);
+
+		ALL_EcocustList.add(newcust);
 
 	}
 
 	// This one will display the customer list fromt he custListArrayList
 
-	public void showCustList() {
-		for (customer show : custList) {
+	public void showWcustList() {
+		for (customer show : WcustList) {
+			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.Preference + "\n");
+		}
+	}
+
+	public void showAllEco() {
+		for (customer show : ALL_EcocustList) {
 			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.Preference + "\n");
 		}
 	}
 
 	public void SaveCustListEco() throws IOException {
 		try {
-
+			System.out.println("This is in the Final SaveCustListEco of All_EcoocustList:** ");
+			showAllEco();
+			
 			BufferedWriter bw = new BufferedWriter(new FileWriter(new File("CuEcoList.txt")));
-			for (int i = 0; i < custList.size(); i++) {
-
-				bw.write(custList.get(i).name + " " + custList.get(i).seat + " " + custList.get(i).level + " "
-						+ custList.get(i).Preference);
+			
+			System.out.println("This is size of EcocustList.size: "+ALL_EcocustList.size());
+			
+			
+			for (int i = 0; i < ALL_EcocustList.size(); i++) {
+				
+				bw.write(ALL_EcocustList.get(i).name + " " + ALL_EcocustList.get(i).seat + " "
+						+ ALL_EcocustList.get(i).level + " " + ALL_EcocustList.get(i).Preference);
 				bw.newLine();
 			}
 			bw.close();
@@ -194,27 +308,42 @@ public class economy_Class {
 			String seat = array[1];
 			String level = array[2];
 			String prefer = array[3];
+
+			// This is populating to the All customer economy arrylist:
+			customer a = new customer(name, seat, level, prefer);
+			ALL_EcocustList.add(a);
+			System.out.println("This is int he populate list fo All Eco list : " );
+			showAllEco();
 			// this will handle the w , m and A seat count:
-			if (prefer.contentEquals("W")) {
+			if (prefer.contentEquals("W")){
 				count_W++;
 				countTotalSeat++;
 				customer c = new customer(name, seat, level, prefer);
-				custList.add(c);
+				WcustList.add(c);
+				int index = tranSeat.tranlateWIndex(seat);
 
-				for (int i = 0; i < window_Seat; i++) {
-					if (!(windowSeat[i])) {
-						windowSeat[i] = true;// this line is updating the
-												// windwSeat array
-					}
-				}
+				windowSeat[index] = true;// this line is updating the
+											// windwSeat array
+
 			} else if (prefer.contentEquals("M")) {
 				count_M++;
 				countTotalSeat++;
+				customer c = new customer(name, seat, level, prefer);
+				McustList.add(c);
+				int index = tranSeat.tranlateMIndex(seat);
+
+				middleSeat[index] = true;
+
 			}
 
 			else if (prefer.contentEquals("A")) {
 				count_A++;
 				countTotalSeat++;
+				customer c = new customer(name, seat, level, prefer);
+				AcustList.add(c);
+				int index = tranSeat.tranlateAIndex(seat);
+
+				windowSeat[index] = true;
 			}
 			// System.out.println(
 			// "HEllO I am here: ..countW , countM, countA are: " + count_W +
@@ -226,6 +355,35 @@ public class economy_Class {
 
 		}
 		read.close();
+	}
+
+	public void BoosofCancleEco() { // find customer in the All eco array List.
+
+		try {
+			Scanner in = new Scanner(System.in);
+
+			System.out.println("Enter your name: ");
+			String name = in.nextLine();
+			System.out.println("Your name is :" + name);
+			for (int i = 0; i < ALL_EcocustList.size(); i++) {
+
+				if (ALL_EcocustList.get(i).name.contentEquals(name)) {
+					System.out.println("name in i is " + ALL_EcocustList.get(i).name);
+					System.out.println(" Theere is the customer name: " + name);
+					String temp = ALL_EcocustList.get(i).seat;
+					System.out.println("Your seat is: " + temp);
+					deleteSeat(temp, name);
+					ALL_EcocustList.remove(i);
+
+					return;
+				}
+			}
+
+			System.out.println(" No such name\n");
+
+		} catch (Exception e) {
+			System.out.println("Exception occur in seat choice of boss of Cancel economy Class.");
+		}
 	}
 
 	private String setname() {
@@ -244,7 +402,7 @@ public class economy_Class {
 	}
 
 	// This method will return the customer name from the setname which get the
-	// name from the scanner
+	// name from the scanners
 	private String getname() {
 		return setname();
 	}
@@ -269,16 +427,64 @@ public class economy_Class {
 				System.out.println("countTotalSeat= " + countTotalSeat);
 				System.out.println("count_W= " + count_W);
 				System.out.println("This is windowSeat[" + i + "]:" + windowSeat[i]);
-				// System.out.println("This is windowSeat[1]: " +
-				// windowSeat[i+1]);
-				// System.out.println("This is windowSeat[2]: " +
-				// windowSeat[i+2]);
+
 				temp = i;
 				break;
 			}
 		}
-			showWindow();
-		//System.out.println("ATT:::::This is i in the resvWindowSeat: " + i);
+		showWindow();
+
+		return temp;// the array index will return to the caller
+	}
+
+	private int resvMiddleSeat() {
+		int i;
+		int temp = 0;
+		for (i = 0; i < middle_Seat; i++) {
+			if (!(middleSeat[i])) {
+				middleSeat[i] = true;
+
+				System.out.println("I am in the resvMiddleSeat before increase it: count_M here is : " + this.count_M);// just
+																														// testing
+				count_M++;// update the window seat
+				countTotalSeat++;// update the total seat
+				System.out.println("countTotalSeat= " + countTotalSeat);
+				System.out.println("count_M= " + count_M);
+				System.out.println("This is middleSeat[" + i + "]:" + middleSeat[i]);
+
+				temp = i;
+				break;
+			}
+		}
+
+		// ******come back here******
+		showMiddle();
+		// System.out.println("ATT:::::This is i in the resvWindowSeat: " + i);
+		return temp;// the array index will return to the caller
+	}
+
+	private int resvAisealSeat() {
+		int i;
+		int temp = 0;
+		for (i = 0; i < aiseal_Seat; i++) {
+			if (!(AisaelSeat[i])) {
+				AisaelSeat[i] = true;
+
+				System.out.println("I am in the resvAisealSeat before increase it: count_A here is : " + this.count_A);// just
+																														// testing
+				count_A++;// update the window seat
+				countTotalSeat++;// update the total seat
+				System.out.println("countTotalSeat= " + countTotalSeat);
+				System.out.println("count_A= " + count_A);
+				System.out.println("This is AisealSeat[" + i + "]:" + AisaelSeat[i]);
+
+				temp = i;
+				break;
+			}
+		}
+
+		showAiseal();
+
 		return temp;// the array index will return to the caller
 	}
 
@@ -369,10 +575,12 @@ public class economy_Class {
 
 	// general economy class full qurey
 	public boolean isFulllyBooked() {
-		if (countTotalSeat <= TotalSeat)// if not fully, return false
-			return false;
+		System.out.println("This is in the isFullyBooked: coutTotalSeat: "+ countTotalSeat);
+		System.out.println("This is in the isFullyBooked: TotalSeat: "+ TotalSeat);
+		if (countTotalSeat < TotalSeat)
+			return true; //it is not full, return true
 		else
-			return true;// if full, return true
+			return false;// it full, return false
 
 	}
 
@@ -410,4 +618,88 @@ public class economy_Class {
 
 	}
 
+	public void showMiddle() {
+		for (int i = 0; i < middleSeat.length; i++) {
+			System.out.println("Middle Seat with true and false: " + middleSeat[i] + "\n");
+		}
+
+	}
+
+	public void showAiseal() {
+		for (int i = 0; i < AisaelSeat.length; i++) {
+			System.out.println("Aiseal Seat with true and false: " + AisaelSeat[i] + "\n");
+		}
+
+	}
+
+	// This will find the seat in the specific window array, m array and A array
+	public void deleteSeat(String seat, String name) {
+		// if string has A or F go to W array
+
+		// else if string has B or E go to M array
+
+		// else if string has c or D go to Aiseal array
+		int index = tranSeat.tranlateWIndex(seat);
+
+		if (seat.indexOf("A") >= 0) {
+			System.out.println("This seat is from the Window class\n");
+			// find that index in the window array.
+			windowSeat[index] = false;
+			count_W--;
+			fixWcustList(name);
+
+		} else if(seat.indexOf("B") >= 0) {
+			System.out.println("This seat is from the Middle class\n");
+			// find that index in the window array.
+			middleSeat[index] = false;
+			count_M--;
+			fixMcustList(name);
+		}
+		else if	(seat.indexOf("C") >= 0) {
+				System.out.println("This seat is from the Aiseal class\n");
+				// find that index in the window array.
+				AisaelSeat[index] = false;
+				count_A--;
+				fixAcustList(name);}
+			System.out.println("This is from delete Seat: countTotalSeat before --:"+ countTotalSeat);
+		countTotalSeat--;
+		System.out.println("This is from delete Seat: countTotalSeat after --:"+ countTotalSeat);
+	}
+
+	// this method should call from the boss of cancel with given customer's
+	// name to cancel
+	public void fixWcustList(String s) {
+
+		for (int i = 0; i < WcustList.size(); i++) {
+
+			if (WcustList.get(i).name.contentEquals(s)) {
+				System.out.println("name in i is " + WcustList.get(i).name);
+				WcustList.remove(i);
+			}
+
+		}
+	}
+	public void fixMcustList(String s) {
+
+		for (int i = 0; i < McustList.size(); i++) {
+
+			if (McustList.get(i).name.contentEquals(s)) {
+				System.out.println("name in i is " + McustList.get(i).name);
+				McustList.remove(i);
+			}
+
+		}
+	}
+		
+		public void fixAcustList(String s) {
+
+			for (int i = 0; i < AcustList.size(); i++) {
+
+				if (AcustList.get(i).name.contentEquals(s)) {
+					System.out.println("name in i is " + AcustList.get(i).name);
+					AcustList.remove(i);
+				}
+
+			}
+		}
 }
