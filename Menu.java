@@ -10,7 +10,7 @@ import java.io.*;
 // declare other classes here too.
 // This method will take care ever other classes such as economy Class and
 public class Menu {
-	economy_Class eco = new economy_Class();
+	Economy_FirstClass eco = new Economy_FirstClass();
 	//first class object will be initiated too.
 
 	//this constructor  will start the application with pre-recorded customer list by filling the cust_list arrayList(every time the program start)
@@ -18,13 +18,13 @@ public class Menu {
 		
 		//call the method to read a recorded file to populate the custLists(Eco and FirstClass)
 		try{
-			eco.populate_CustListEcO();
+			eco.populate_flightList();
 		//this is just testing if the cust_list is correctly pouplated with  recorded file
 			//System.out.println("****This is from window list");
 			//eco.showWcustList();
 			
 			System.out.println("****This is from All customer list");
-			eco.showAllEco();
+			eco.ShowAllCust();
 			
 			
 		}catch (IOException e){
@@ -56,8 +56,16 @@ public class Menu {
 				// test
 				// for
 				if (temp == 1) {
+					if (!eco.isFlightFulllyBooked())
+					{
+						System.out.println("Flight is Already booked, please choose the another flight:");
+						
+					}
+					else
+
+					{
+							System.out.println(
 					
-					System.out.println(
 							"Please choose service of class" + "\n" + "1. Economy Class." + "\n" + "2. First Class.");
 					System.out.println("Your Choice:");
 					temp2 = in.nextInt();
@@ -76,8 +84,14 @@ public class Menu {
 					}
 
 					else
-						System.out.println("You want to reserve in First Class!:");
-
+						{
+							System.out.println("You want to reserve in First Class!:");
+							eco.BossOfFirstClass();
+						}
+						
+						
+					}
+					
 				} else
 					{System.out.println("You want to cancel the reservation!");
 					//this is cancleing now:

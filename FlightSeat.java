@@ -29,6 +29,45 @@ public class FlightSeat {
 	return seat;
 	}
 	
+	public static String tranlateWF(int i)
+	{
+		String seat="";
+		
+		if(i ==0)
+			seat = "A1";
+		
+		else if (i==1)
+			seat = "A2";
+		
+		else if (i==2)
+			seat ="D1";
+		
+		else if (i==3)
+			seat = "D2";
+		
+		return seat;
+	}
+	
+	public static String tranlateAF(int i)
+	{
+		String seat="";
+		
+		if(i ==0)
+			seat = "B1";
+		
+		else if (i==1)
+			seat = "B2";
+		
+		else if (i==2)
+			seat ="C1";
+		
+		else if (i==3)
+			seat = "C2";
+		
+		return seat;
+	}
+	
+	
 	//This method translate "A10" to 0 and so on.
 	public static int tranlateWIndex(String s)
 	{
@@ -55,7 +94,29 @@ public class FlightSeat {
 			return i;
 	}
 	
+	public static int tranlateWIndexF(String s)
+	{
+		int i=0;
+		
+		if(s.contentEquals("A1"))
+			i = 0;
+		
+		else if (s.contentEquals("A2"))
+			i= 1;
+		
+		else if (s.contentEquals("D1"))
+			i= 2;
+		
+		else if(s.contentEquals("D2"))
+			i = 3;
+		
+		return i;
+	}
 
+	
+	
+	
+	
 	//make middle seat translation
 	public static String tranlateM(int i)
 	{
@@ -150,7 +211,24 @@ public class FlightSeat {
 		//here continue define more seat number D23, D20, ect.
 			return i;
 	}
-
+	public static int tranlateAIndexF(String s)
+	{
+		int i=0;
+		
+		if(s.contentEquals("B1"))
+			i = 0;
+		
+		else if (s.contentEquals("B2"))
+			i= 1;
+		
+		else if (s.contentEquals("C1"))
+			i= 2;
+		
+		else if(s.contentEquals("C2"))
+			i = 3;
+		
+		return i;
+	}
 	
 	
 	
