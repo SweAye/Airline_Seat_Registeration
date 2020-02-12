@@ -6,14 +6,13 @@ package airline;
 import java.util.*;
 
 import java.io.*;
-// FirstClass, via their Boos of the class method
-// declare other classes here too.
-// This method will take care ever other classes such as economy Class and
+
+
 public class Menu {
 	Economy_FirstClass eco = new Economy_FirstClass();
-	//first class object will be initiated too.
+	
 
-	//this constructor  will start the application with pre-recorded customer list by filling the cust_list arrayList(every time the program start)
+
 	public  Menu(){
 		
 		//call the method to read a recorded file to populate the custLists(Eco and FirstClass)
@@ -78,7 +77,7 @@ public class Menu {
 					
 						
 						
-						eco.BossOfEconomyClass();// should return, Economy class
+						eco.EconomyClassHelper();// should return, Economy class
 													// is full.
 
 					}

@@ -12,92 +12,70 @@ import java.io.*;
  *         booked 2. if not full look for preference seat among windows(W),
  *         Middle(M), and Aisle(A) 3. if full, back to the request and display
  *         no seat is left for the preference and ask for start over again to
- *         look for more avaible seat 4. if not full, take the first seat that
+ *         look for more available seat 4. if not full, take the first seat that
  *         match customer preference and display it, 5. Assign as occupied in
  *         the Economy seat Array along with the customer information(Object of
  *         Customer) 6. Write to the customer record file (In this case CL34.txt
- *         file for furture reference: This file will be used to repopulated to
+ *         file for future reference: This file will be used to re populated to
  *         the Economy ArrayList when the program start again.
  * 
  *
  */
 public class Economy_FirstClass {
 	String seat;
-	int countAllSeat = 0;// This will back to 0 after testing
+	int countAllSeat = 0;
 	int countEcoAll = 0;
 	int countFAll = 0;
 
-	FlightSeat tranSeat = new FlightSeat();// This will translate the array
-											// index into real flight seat.
+	FlightSeat tranSeat = new FlightSeat();
+											
 	final int Flight_Seat = 20;
-	// Four final count for seat, this cannot change//should make those more
-	// object orientend(something like putting in the constructor or so)
+	
 	final int ETotalSeat = 12;
-	final int window_Seat = 4;// the seat number is = 40 seat per each w, m, and
-								// A seats
+	final int window_Seat = 4;
 	final int middle_Seat = 4;
 	final int aiseal_Seat = 4;
 
-	// counting window seat, middle seat and aiseal seat
-	int Ecount_W = 0;// These all will back to 0 after testing
+	
+	int Ecount_W = 0;
 	int Ecount_M = 0;
 	int Ecount_A = 0;
+	
+	
 	// *********************this is first class variables*****************
+	
 	final int FTotalSeat = 8;
-	final int Fwindow_Seat = 4;// the seat number is = 40 seat per each w, m,
-								// and
+	final int Fwindow_Seat = 4;
 	final int Faiseal_Seat = 4;
 
-	// counting window seat, middle seat and aiseal seat
-	int Fcount_W = 0;// These all will back to 0 after testing
+	
+	int Fcount_W = 0;
 	int Fcount_A = 0;
 
-	// *********************this is first class variables Done
-	// here*****************
-	// Three array to to populate the seat request
-	// This is just testing with arrayList???????Here testing
+	
 
-	ArrayList<customer> ALL_CusList = new ArrayList<customer>();// this is
-																// whole
-	ArrayList<customer> All_EcoList = new ArrayList<customer>(); // Plane
-	ArrayList<customer> ALL_FList = new ArrayList<customer>(); // ArrayList,
-	// mainly
-	// will
-	// use in calcelation or searching for a customer's name, seat
+	ArrayList<customer> ALL_CusList = new ArrayList<customer>();
+	ArrayList<customer> All_EcoList = new ArrayList<customer>(); 
+	ArrayList<customer> ALL_FList = new ArrayList<customer>(); 
+	
 
-	ArrayList<customer> EWcustList = new ArrayList<customer>();// this Window
-																// customer
-																// arraylist
+	ArrayList<customer> EWcustList = new ArrayList<customer>();
+	ArrayList<customer> EMcustList = new ArrayList<customer>();
 
-	ArrayList<customer> EMcustList = new ArrayList<customer>();// this middle
-																// seat customer
-																// arraylist
+	ArrayList<customer> EAcustList = new ArrayList<customer>();
 
-	ArrayList<customer> EAcustList = new ArrayList<customer>();// this is Aiseal
-
+	
 	// **********************This is for First Class******************
 	ArrayList<customer> FWcustList = new ArrayList<customer>();
-	ArrayList<customer> FAcustList = new ArrayList<customer>();// this is Aiseal
+	ArrayList<customer> FAcustList = new ArrayList<customer>();
 
-	boolean[] windowSeat = new boolean[window_Seat];// These number will depend
-													// on the place's seat
-													// structure
-	boolean[] middleSeat = new boolean[middle_Seat];// for this project of plane
-													// seat structure that will
-													// fix.
-	boolean[] AisaelSeat = new boolean[aiseal_Seat];// if plane seat setting are
-													// change, just need to
-													// change the final
-													// variables
+	boolean[] windowSeat = new boolean[window_Seat];
+	boolean[] middleSeat = new boolean[middle_Seat];
+	boolean[] AisaelSeat = new boolean[aiseal_Seat];
 
-	boolean[] FwindowSeat = new boolean[window_Seat];// These number will depend
-	boolean[] FAisaelSeat = new boolean[aiseal_Seat];// if plane seat setting
-														// are
-	// may be make constructor to initialize the all hard code numbers;
-	// default constructor
-	// this will populated all three array with false(means there is no occupied
-	// seat)
-
+	boolean[] FwindowSeat = new boolean[window_Seat];
+	boolean[] FAisaelSeat = new boolean[aiseal_Seat];
+														
 	public Economy_FirstClass() {
 		seat = " ";
 		for (int i = 0; i < windowSeat.length; i++) {
@@ -112,20 +90,20 @@ public class Economy_FirstClass {
 		}
 	}
 	// *********************************************************************************************************
-	// This method will handle all major qury check before it is book to the
+	// This method will handle all major query check before it is book to the
 	// economy class and return the query
 	// And ****This is the only method will be public in this class
-	// To handle all of those qurey to process the real reservation and return
+	// To handle all of those query to process the real reservation and return
 	// the request to the caller of this class,
 	// In order to hide the operations in this class.
 
-	public void BossOfEconomyClass() {
+	public void EconomyClassHelper() {
 		try {
 			int temp;
 			Scanner in = new Scanner(System.in);
-			// if economy class full?
-			if (isFullyBookedEco())// if is false, it is not full, it is true
-			{ // return, it is full
+			
+			if (isFullyBookedEco())
+			{ 
 				System.out.println("It is avaiable");
 
 			} else {
@@ -147,31 +125,21 @@ public class Economy_FirstClass {
 				else {
 					System.out.println("You will have your window seat");
 
-					// the window seat array and assign the first founded window
+					
 
-					int recordIndex = resvWindowSeat();// this will assign the
-														// seat
-														// and return the index
-														// value of the array
+					int recordIndex = resvWindowSeat();
 					System.out.println("This is the assigned seat in the window array seat, index: " + recordIndex);
-					// Here call the translator(method) of array index to real
-					// flight seat number.
+					
 
 					String s = tranSeat.tranlateW(recordIndex);
 					System.out.println("This is real seat: " + s);
 
-					// Now call for the customer object ArrayList to send,
-					// custoemr
-					// name, class and seat
+					
 					String name = getname();
 					System.out.println("This is your name: " + name);
 
-					// method call to set customer arraylist
-					makeCustListWE(name, s, "Economy", "W");// "W" and Economy
-															// will
-															// change according
-															// to
-															// the method call.
+					
+					makeCustListWE(name, s, "Economy", "W");
 					makeAllCustList(name, s, "Economy", "W");
 					makeAllEcoList(name, s, "Economy", "W");
 
@@ -190,16 +158,14 @@ public class Economy_FirstClass {
 
 					int recordIndex = resvMiddleSeat();
 					System.out.println("This is the assigned seat in the Middle array seat, index: " + recordIndex);
-					// Here call the translator(method) of array index to real
-					// flight seat number.
-
+					
 					String s = tranSeat.tranlateM(recordIndex);
 					System.out.println("This is real seat: " + s);
 
-					String name = getname();// is that a test? missing a purpose
+					String name = getname();
 					System.out.println("This is your name: " + name);
 					// method call to set customer arraylist
-					makeCustListM(name, s, "Economy", "M");// "W" and Economy
+					makeCustListM(name, s, "Economy", "M");
 					makeAllCustList(name, s, "Economy", "M");
 					makeAllEcoList(name, s, "Economy", "M");
 
@@ -219,19 +185,19 @@ public class Economy_FirstClass {
 
 				int recordIndex = resvAisealSeat();
 				System.out.println("This is the assigned seat in the Aiseal array seat, index: " + recordIndex);
-				// Here call the translator(method) of array index to real
-				// flight seat number.
+				
 
 				String s = tranSeat.tranlateA(recordIndex);
 				System.out.println("This is real seat: " + s);
 
-				String name = getname();// is that a test? missing a purpose
+				String name = getname();
 				System.out.println("This is your name: " + name);
+				
 				// method call to set customer arraylist
-				makeCustListA(name, s, "Economy", "A");// "W" and Economy will
-														// change according to
-				makeAllCustList(name, s, "Economy", "A"); // the method
-				makeAllEcoList(name, s, "Economy", "A"); // call.
+				makeCustListA(name, s, "Economy", "A");
+														
+				makeAllCustList(name, s, "Economy", "A"); 
+				makeAllEcoList(name, s, "Economy", "A"); 
 
 				System.out.println("This is from the Aiseal Seat in boos of econmy: ");
 				ShowAllCust();
@@ -244,9 +210,7 @@ public class Economy_FirstClass {
 
 	}
 
-	// This method will make customer list for whole economy class
-	// customers(Window,middle, Aiseal)
-	// Now it time to make whole customer profile
+	
 
 	private void makeCustListWE(String name, String seat, String level, String pref) {
 
@@ -254,7 +218,7 @@ public class Economy_FirstClass {
 
 		EWcustList.add(newcust);
 		System.out.println("This is first customer profile :\n " + EWcustList.get(0).name + "\t "
-				+ EWcustList.get(0).seat + "\t" + EWcustList.get(0).level + "\t" + EWcustList.get(0).Preference);
+				+ EWcustList.get(0).seat + "\t" + EWcustList.get(0).level + "\t" + EWcustList.get(0).preference);
 
 	}
 
@@ -264,7 +228,7 @@ public class Economy_FirstClass {
 
 		FWcustList.add(newcust);
 		System.out.println("This is first customer profile :\n " + FWcustList.get(0).name + "\t "
-				+ FWcustList.get(0).seat + "\t" + FWcustList.get(0).level + "\t" + FWcustList.get(0).Preference);
+				+ FWcustList.get(0).seat + "\t" + FWcustList.get(0).level + "\t" + FWcustList.get(0).preference);
 
 	}
 
@@ -274,7 +238,7 @@ public class Economy_FirstClass {
 
 		EMcustList.add(newcust);
 		System.out.println("This is first customer profile :\n " + EMcustList.get(0).name + "\t "
-				+ EMcustList.get(0).seat + "\t" + EMcustList.get(0).level + "\t" + EMcustList.get(0).Preference);
+				+ EMcustList.get(0).seat + "\t" + EMcustList.get(0).level + "\t" + EMcustList.get(0).preference);
 
 	}
 
@@ -284,7 +248,7 @@ public class Economy_FirstClass {
 
 		EAcustList.add(newcust);
 		System.out.println("This is first customer profile :\n " + EAcustList.get(0).name + "\t "
-				+ EAcustList.get(0).seat + "\t" + EAcustList.get(0).level + "\t" + EAcustList.get(0).Preference);
+				+ EAcustList.get(0).seat + "\t" + EAcustList.get(0).level + "\t" + EAcustList.get(0).preference);
 
 	}
 
@@ -294,7 +258,7 @@ public class Economy_FirstClass {
 
 		FAcustList.add(newcust);
 		System.out.println("This is first customer profile :\n " + FAcustList.get(0).name + "\t "
-				+ FAcustList.get(0).seat + "\t" + FAcustList.get(0).level + "\t" + FAcustList.get(0).Preference);
+				+ FAcustList.get(0).seat + "\t" + FAcustList.get(0).level + "\t" + FAcustList.get(0).preference);
 
 	}
 
@@ -322,29 +286,28 @@ public class Economy_FirstClass {
 
 	}
 
-	// This one will display the customer list fromt he custListArrayList
 
 	public void showWcustList() {
 		for (customer show : EWcustList) {
-			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.Preference + "\n");
+			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.preference + "\n");
 		}
 	}
 
 	public void ShowAllCust() {
 		for (customer show : ALL_CusList) {
-			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.Preference + "\n");
+			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.preference + "\n");
 		}
 	}
 
 	public void ShowAllEco() {
 		for (customer show : All_EcoList) {
-			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.Preference + "\n");
+			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.preference + "\n");
 		}
 	}
 
 	public void ShowAllFirst() {
 		for (customer show : ALL_FList) {
-			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.Preference + "\n");
+			System.out.println(show.name + "\t" + show.seat + "\t" + show.level + "\t" + show.preference + "\n");
 		}
 	}
 
@@ -361,7 +324,7 @@ public class Economy_FirstClass {
 			for (int i = 0; i < ALL_CusList.size(); i++) {
 
 				bw.write(ALL_CusList.get(i).name + " " + ALL_CusList.get(i).seat + " " + ALL_CusList.get(i).level + " "
-						+ ALL_CusList.get(i).Preference);
+						+ ALL_CusList.get(i).preference);
 				bw.newLine();
 			}
 			bw.close();
@@ -456,7 +419,7 @@ public class Economy_FirstClass {
 	}
 
 	// This is only one for Eco and First class
-	public void BoosofCancleEco() { // find customer in the All eco array List.
+	public void BoosofCancleEco() { 
 
 		try {
 			Scanner in = new Scanner(System.in);
@@ -529,8 +492,8 @@ public class Economy_FirstClass {
 	// Window seat reserved array
 	// This method will check the specific array index for false(not occupied
 	// if not occupied, make it true(occupied) and return the array index of the
-	// assigned
-	// idex
+	// assigned index
+	
 	private int resvWindowSeat() {
 		int i;
 		int temp = 0;
@@ -602,10 +565,10 @@ public class Economy_FirstClass {
 			}
 		}
 
-		// ******come back here******
+		
 		showMiddle();
-		// System.out.println("ATT:::::This is i in the resvWindowSeat: " + i);
-		return temp;// the array index will return to the caller
+		
+		return temp;
 	}
 
 	private int resvAisealSeat() {
@@ -631,7 +594,7 @@ public class Economy_FirstClass {
 
 		showAiseal();
 
-		return temp;// the array index will return to the caller
+		return temp;
 	}
 
 	private int resvAisealSeatF() {
@@ -659,27 +622,7 @@ public class Economy_FirstClass {
 
 		return temp;// the array index will return to the caller
 	}
-	// Just for testing for window array
-	/*
-	 * public void fillWindArray(){ windowSeat[0]= true; windowSeat[1]= true;
-	 * windowSeat[2]= true;
-	 * 
-	 * 
-	 * }
-	 */
-
-	// boolean[][] custArray = new boolean[4][4];
-	// ArrayList<customer> eco_custo = new ArrayList<customer>();
-
-	// display for default economy class customer array(custArray)
-	/*
-	 * private void displayArray() { for (int i = 0; i < windowSeat.length; i++)
-	 * { System.out.print(windowSeat[i]+ " "); System.out.println();
-	 * System.out.print(middleSeat[i]+ " "); System.out.println();
-	 * System.out.print(AisaelSeat[i]+ " "); System.out.println(); }
-	 * 
-	 * }
-	 */
+	
 	// Constructor with String seat argument
 	private Economy_FirstClass(String seat) {
 		this.seat = seat;
@@ -696,56 +639,7 @@ public class Economy_FirstClass {
 		this.seat = seat;
 	}
 
-	// This method is in construction, which will be modified to
-	// taking two argument(row and colum) to reserved a seat rather than a hard
-	// number [0][1] or [2][1] for the index
-	/*
-	 * private void reserved_seat() {
-	 * 
-	 * custArray[0][2] = true;// make it occupied custArray[2][3] = true;
-	 * 
-	 * }
-	 */
-	/*
-	 * // This method will search in the economy seat private boolean
-	 * isEmpty(int row, int colum) { if (!(custArray[row][colum]))// not false
-	 * is true means occupied return true;// it is occupied else return false;//
-	 * it is not occupied }
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * private void displaySeatINFormat() { try{
-	 * 
-	 * int x = Integer.valueOf("3"); //double c = Double.parseDouble("5");
-	 * //String b = Integer.toBinaryString(3);//This one can't convert to binary
-	 * number
-	 * 
-	 * System.out.println(x);}catch(NumberFormatException e){ }
-	 * //System.out.println(c); //System.out.println(b); } //This will store the
-	 * name of the RealSeat to the seat array private int assignSeat(String
-	 * seatName) { int SeatIndex = 0;//This get to be increase and global later
-	 * to handle the cancel and add the seat
-	 * 
-	 * String [] array = new String[5];//This has to be global in this class,
-	 * for now using the hard code to test it array[SeatIndex] = seatName;
-	 * 
-	 * return SeatIndex;//This doesn't have to return it, searchSeat can handle
-	 * to find the seat for customer }
-	 * 
-	 * 
-	 * 
-	 * /*need searching algorith to find the String seat(1B, 1C in the array),
-	 * Prototype of the seat search This method will use only when customer
-	 * cancel the seat, customer object will pass the customer's seat name such
-	 * as 1A , 1B and this method will find it int the array and cancel the
-	 * seat.
-	 * 
-	 */
-
-	// general economy class full qurey
-
+	
 	public boolean isFlightFulllyBooked() {
 		System.out.println("This is in the isFlightFullyBooked: countAllseat: " + countAllSeat);
 		System.out.println("This is in the isFullyBooked: ETotalSeat: " + ETotalSeat);
@@ -860,13 +754,7 @@ public class Economy_FirstClass {
 
 	// This will find the seat in the specific window array, m array and A array
 	public void deleteSeat(String seat, String name) {
-		// if string has A or F go to W array
-
-		// else if string has B or E go to M array
-
-		// else if string has c or D go to Aiseal array
-
-		//
+		
 		int index = tranSeat.tranlateWIndex(seat);
 
 		if ((seat.indexOf("A") >= 0) || (seat.indexOf("F") >= 0)) {
@@ -931,8 +819,7 @@ public class Economy_FirstClass {
 
 	// *************frist Class***************************
 
-	// this method should call from the boss of cancel with given customer's
-	// name to cancel
+	
 	public void fixWcustList(String s) {
 
 		for (int i = 0; i < EWcustList.size(); i++) {

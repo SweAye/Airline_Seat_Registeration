@@ -14,7 +14,7 @@ package airline;
 			BufferedWriter bw = new BufferedWriter(new FileWriter(new File("Customer_2.txt")));
 			for(int i=0; i<custList.size(); i++){
 				
-				bw.write (custList.get(i).name + " " + custList.get(i).seat + " " +custList.get(i).level + " " + custList.get(i).Preference);
+				bw.write (custList.get(i).name + " " + custList.get(i).seat + " " +custList.get(i).level + " " + custList.get(i).preference);
 				bw.newLine();
 			}
 			bw.close();
